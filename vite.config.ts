@@ -7,5 +7,8 @@ export default defineConfig({
   // this from /cafflife/). The app is a single page, so there is no routing
   // to worry about.
   base: "./",
+  // Not Vite's default 5173, which flightdeck uses: on the same origin the two
+  // apps would share the browser's favicon cache and storage.
+  server: { port: 5174 },
   plugins: [react()],
 })

@@ -63,3 +63,7 @@ Safari's.
 A small service worker ([public/sw.js](public/sw.js)) caches the app shell.
 It only registers in production builds. Page loads try the network first, so
 a new deploy appears on the next launch.
+
+## License
+
+[MIT](LICENSE)
