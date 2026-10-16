@@ -14,7 +14,7 @@ your system right now from everything you've logged and when you drank it.
   Hover or drag along it to read the level at any time (arrow keys work too).
   Use ‹ / › (or scroll sideways on a trackpad, or Page Up / Page Down) to
   look back through earlier days.
-- **Log a drink**: green tea, black tea, pour-over, AeroPress, instant coffee,
+- **Log a drink**: green tea, black tea, milk tea, pour-over, AeroPress, instant coffee,
   and single or double espresso. Each has a default dose that you can adjust
   before saving. Coffee has a half-caf toggle, and you can backdate a drink
   ("30 min ago" or any date and time).
@@ -58,15 +58,19 @@ why it's a setting. Treat the numbers as an estimate, not a measurement.
 
 Default doses are in [src/domain/drinks.ts](src/domain/drinks.ts):
 
-| Drink | Default | Assumes |
-|---|---|---|
-| Green tea | 30 mg | 8 oz cup |
-| Black tea | 47 mg | 8 oz cup |
-| Pour-over | 145 mg | 12 oz cup (~20 g coffee) |
-| AeroPress | 110 mg | 15 g dose |
-| Instant coffee | 60 mg | 8 oz cup |
-| Espresso | 64 mg | single shot |
-| Double espresso | 128 mg | double shot |
+| Drink | Default | Typical range | Assumes |
+|---|---|---|---|
+| Green tea | 30 mg | 20–45 mg | 8 oz cup |
+| Black tea | 47 mg | 40–70 mg | 8 oz cup |
+| Milk tea | 80 mg | 30–150 mg | 16 oz cup (varies a lot by shop) |
+| Pour-over | 145 mg | 100–200 mg | 12 oz cup (~20 g coffee) |
+| AeroPress | 110 mg | 80–150 mg | 15 g dose |
+| Instant coffee | 60 mg | 30–90 mg | 8 oz cup |
+| Espresso | 64 mg | 50–80 mg | single shot |
+| Double espresso | 128 mg | 100–160 mg | double shot |
+
+The log sheet shows the range next to the default, e.g. "typically 80 mg
+(30–150)".
 
 ## Running
 

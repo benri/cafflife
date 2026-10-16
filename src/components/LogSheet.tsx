@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { drinkById, type Drink } from "../domain/drinks";
+import { drinkById, typicalText, type Drink } from "../domain/drinks";
 import { formatAgo, fromLocalInputValue, MINUTE, toLocalInputValue } from "../domain/time";
 import type { Entry } from "../domain/types";
 import type { NewEntry } from "../data/store";
@@ -73,8 +73,8 @@ export function LogSheet({ target, now, usualMg, onSubmit, onDelete, onEditDrink
         drink.custom
           ? [drink.serving, `${drink.mg} mg`].filter(Boolean).join(" · ")
           : usualMg === drink.mg
-            ? `${drink.serving} · typically ${drink.mg} mg`
-            : `Your usual ${usualMg} mg · typically ${drink.mg} mg`
+            ? `${drink.serving} · ${typicalText(drink)}`
+            : `Your usual ${usualMg} mg · ${typicalText(drink)}`
       }
       icon={<DrinkIcon kind={drink.icon} size={30} />}
       onClose={onClose}

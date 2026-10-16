@@ -37,6 +37,19 @@ export function DrinkIcon({ kind, ...props }: IconProps & { kind: DrinkIconKind 
           <path d="M3 21h14" />
         </Svg>
       );
+    case "milktea":
+      // A domed cup with a wide straw and tapioca pearls.
+      return (
+        <Svg {...props}>
+          <path d="M8 8.5a4 3 0 0 1 8 0" />
+          <path d="M6 8.5h12" />
+          <path d="M7.25 8.5l1.15 11.6a1 1 0 0 0 1 .9h5.2a1 1 0 0 0 1-.9L16.75 8.5" />
+          <path d="M12.5 5.6 14 2" />
+          <circle cx="10.4" cy="17.6" r="1" />
+          <circle cx="13.4" cy="17.9" r="1" />
+          <circle cx="11.9" cy="15.4" r="1" />
+        </Svg>
+      );
     case "pourover":
       return (
         <Svg {...props}>
