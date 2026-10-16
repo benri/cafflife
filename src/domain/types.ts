@@ -13,4 +13,10 @@ export interface Entry {
 
 export interface Settings {
   halfLifeHours: number;
+  /** Usual bedtime, minutes after local midnight (e.g. 22:30 → 1350). */
+  bedtimeMinutes: number;
+  /** The most caffeine (mg) you want left in your system at bedtime. */
+  sleepTargetMg: number;
+  /** Your own default amount per drink, replacing the built-in one. */
+  drinkDefaults: Partial<Record<DrinkId, number>>;
 }

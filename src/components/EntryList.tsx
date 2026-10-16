@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { entryAmountAt } from "../domain/caffeine";
 import { drinkById } from "../domain/drinks";
-import { dayLabel, formatTime, startOfDay } from "../domain/time";
+import { dayLabel, formatTime, HOUR, startOfDay } from "../domain/time";
 import type { Entry } from "../domain/types";
 import { DrinkIcon } from "./icons";
 
@@ -64,7 +64,9 @@ export function EntryList({ entries, now, halfLifeHours, onEdit }: Props) {
                     </span>
                     <span className="entry-amounts">
                       <span className="entry-mg">{e.mg} mg</span>
-                      <span className="entry-left">{left >= 1 ? `${Math.round(left)} mg now` : "cleared"}</span>
+                      <span className="entry-left">
+                        {left >= 1 ? `${Math.round(left)} mg now` : e.at > now - HOUR ? "absorbing" : "cleared"}
+                      </span>
                     </span>
                   </button>
                 </li>

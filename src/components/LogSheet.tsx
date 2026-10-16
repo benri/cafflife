@@ -17,23 +17,33 @@ const SLIDER_MAX = 300;
 interface Props {
   target: LogTarget;
   now: number;
-  onSubmit: (entry: NewEntry) => void;
+  /** This drink's usual amount: your saved one, or the built-in default. */
+  usualMg: number;
+  /** `rememberMg` is a new usual amount to save for this drink, or null. */
+  onSubmit: (entry: NewEntry, rememberMg: number | null) => void;
   onDelete?: (entry: Entry) => void;
+  /** Open the editor for one of your own drinks. */
+  onEditDrink?: (drink: Drink) => void;
   onClose: () => void;
 }
 
-export function LogSheet({ target, now, onSubmit, onDelete, onClose }: Props) {
+export function LogSheet({ target, now, usualMg, onSubmit, onDelete, onEditDrink, onClose }: Props) {
   const editing = target.kind === "edit" ? target.entry : null;
   const drink = target.kind === "new" ? target.drink : drinkById(target.entry.drink);
 
-  const [mgText, setMgText] = useState(String(editing ? editing.mg : drink.mg));
+  const [mgText, setMgText] = useState(String(editing ? editing.mg : usualMg));
+  // Off by default, so a one-off change doesn't become the new usual.
+  const [remember, setRemember] = useState(false);
   const [halfCaf, setHalfCaf] = useState(editing ? editing.halfCaf : false);
   const [when, setWhen] = useState<When>(editing ? { kind: "at", ms: editing.at } : { kind: "now" });
 
   const mg = clampMg(parseInt(mgText, 10));
   const at = resolveWhen(when, now);
   const inFuture = at > now + MINUTE;
-  const defaultMg = Math.round(drink.mg * (halfCaf ? 0.5 : 1));
+  const defaultMg = Math.round(usualMg * (halfCaf ? 0.5 : 1));
+  // The usual is stored at full strength; half-caf halves it when logging.
+  const fullMg = halfCaf ? mg * 2 : mg;
+  const canRemember = !editing && fullMg !== usualMg;
 
   const setMg = (n: number) => setMgText(String(clampMg(n)));
 
@@ -45,18 +55,27 @@ export function LogSheet({ target, now, onSubmit, onDelete, onClose }: Props) {
 
   function submit() {
     if (inFuture) return;
-    onSubmit({
-      drink: drink.id,
-      mg,
-      halfCaf: drink.coffee && halfCaf,
-      at: when.kind === "now" ? Date.now() : resolveWhen(when, Date.now()),
-    });
+    onSubmit(
+      {
+        drink: drink.id,
+        mg,
+        halfCaf: drink.coffee && halfCaf,
+        at: when.kind === "now" ? Date.now() : resolveWhen(when, Date.now()),
+      },
+      canRemember && remember ? fullMg : null,
+    );
   }
 
   return (
     <Sheet
       title={drink.name}
-      subtitle={`${drink.serving} · typically ${drink.mg} mg`}
+      subtitle={
+        drink.custom
+          ? [drink.serving, `${drink.mg} mg`].filter(Boolean).join(" · ")
+          : usualMg === drink.mg
+            ? `${drink.serving} · typically ${drink.mg} mg`
+            : `Your usual ${usualMg} mg · typically ${drink.mg} mg`
+      }
       icon={<DrinkIcon kind={drink.icon} size={30} />}
       onClose={onClose}
     >
@@ -110,6 +129,22 @@ export function LogSheet({ target, now, onSubmit, onDelete, onClose }: Props) {
           )}
         </fieldset>
 
+        {canRemember && (
+          <label className="switch-row">
+            <span>
+              <span className="switch-title">Make {fullMg} mg my usual</span>
+              <span className="switch-hint">Starts at this next time you log {drink.name.toLowerCase()}</span>
+            </span>
+            <input
+              type="checkbox"
+              role="switch"
+              className="switch"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+            />
+          </label>
+        )}
+
         {drink.coffee && (
           <label className="switch-row">
             <span>
@@ -158,6 +193,12 @@ export function LogSheet({ target, now, onSubmit, onDelete, onClose }: Props) {
             <span className="time-ago">{inFuture ? "That's in the future" : formatAgo(at, now)}</span>
           </label>
         </fieldset>
+
+        {drink.custom && !drink.hidden && onEditDrink && (
+          <button type="button" className="link-button" onClick={() => onEditDrink(drink)}>
+            Edit {drink.name}
+          </button>
+        )}
 
         <div className="sheet-actions">
           {editing && onDelete && (

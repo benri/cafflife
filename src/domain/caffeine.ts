@@ -25,6 +25,10 @@ export const MAX_HALF_LIFE_HOURS = 10;
 /** First-order absorption rate constant, per hour. */
 export const ABSORPTION_RATE_PER_HOUR = 5;
 
+export const DEFAULT_BEDTIME_MINUTES = 22 * 60 + 30;
+export const DEFAULT_SLEEP_TARGET_MG = 50;
+export const MAX_SLEEP_TARGET_MG = 200;
+
 /** Common guidance for healthy adults (FDA): up to ~400 mg a day. */
 export const DAILY_GUIDANCE_MG = 400;
 

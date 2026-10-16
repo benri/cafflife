@@ -6,15 +6,37 @@ your system right now from everything you've logged and when you drank it.
 - **Now**: the current level in mg, whether it's still rising (and when it
   will peak) or falling, and today's total against the ~400 mg/day guidance
   for healthy adults.
-- **Chart**: the last 24 h plus a 12 h forecast, with a marker for each drink.
+- **Tonight**: a one-line summary under the big number (tap to expand) with
+  your estimated level at bedtime and your **last call**, the latest you
+  could have your usual drink and still be under your target at bedtime.
+- **Chart**: 12 h, 1 day, 3 days or 1 week, with a forecast, a marker for each
+  drink and a dashed line at each bedtime.
   Hover or drag along it to read the level at any time (arrow keys work too).
-- **Log a drink**: green tea, black tea, pour-over, AeroPress, and single or
-  double espresso. Each has a default dose that you can adjust before saving.
-  Coffee has a half-caf toggle, and you can backdate a drink ("30 min ago" or
-  any date and time).
+  Use ‹ / › (or scroll sideways on a trackpad, or Page Up / Page Down) to
+  look back through earlier days.
+- **Log a drink**: green tea, black tea, pour-over, AeroPress, instant coffee,
+  and single or double espresso. Each has a default dose that you can adjust
+  before saving. Coffee has a half-caf toggle, and you can backdate a drink
+  ("30 min ago" or any date and time).
 - **History**: entries grouped by day, with how much of each drink is still
   in your system. Tap an entry to edit or delete it. Deletes can be undone.
-- **Settings**: your half-life (default 5 h).
+- **Your own drinks**: the "+ Add drink" tile adds one with a name, an icon
+  (mug, iced cup, can, bottle, energy drink, bowl, tea cup or small cup), its
+  caffeine, an optional serving note and whether it's coffee (for half-caf).
+  Edit or delete it from its log sheet or Settings. Deleting one your history
+  uses only hides its tile, so past entries keep their name and icon.
+- **Your usual amounts**: change the mg when logging and switch on "Make it my
+  usual" to pre-fill that amount next time. Leave it off for a one-off.
+- **Insights** tab: daily average, busiest day, nights under your bedtime
+  target and typical first / last cup, plus charts of caffeine per day, at
+  bedtime each night, and by drink, over 7 or 30 days.
+- **Settings**: bedtime (default 10:30 PM) and bedtime target (default 50 mg),
+  half-life (default 5 h), your drinks and usual amounts, and your data:
+  - **Back up** saves everything (log, settings, your drinks) as one JSON
+    file. **Restore** reads that file back and replaces everything, after
+    asking. On a phone, saving opens the share sheet (e.g. Save to Files).
+  - **Export CSV** saves the log for a spreadsheet, one row per drink. It's
+    export-only: restore uses the JSON backup.
 - **Installable**: on iPhone, Share → Add to Home Screen. On Android or desktop
   Chrome, use Install app. Once installed it also works offline.
 
@@ -42,6 +64,7 @@ Default doses are in [src/domain/drinks.ts](src/domain/drinks.ts):
 | Black tea | 47 mg | 8 oz cup |
 | Pour-over | 145 mg | 12 oz cup (~20 g coffee) |
 | AeroPress | 110 mg | 15 g dose |
+| Instant coffee | 60 mg | 8 oz cup |
 | Espresso | 64 mg | single shot |
 | Double espresso | 128 mg | double shot |
 
